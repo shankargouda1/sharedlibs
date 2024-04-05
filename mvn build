@@ -1,0 +1,34 @@
+pipeline{
+    agent any
+    stages{
+        stage("checkout the code from github"){
+            steps{
+                git url:'https://github.com/shankargouda1/cicdakshat'
+            }
+        }
+        stage("code compile"){
+            steps{
+                sh "mvn compile"
+                echo "compiling is done"
+            }
+        }
+        stage("code testing"){
+            steps{
+                sh "mvn test"
+            }    
+       }
+       stage("code qa"){
+           steps{
+               sh "mvn checkstyle:checkstyle"
+               recordIssues sourceCodeRetention: 'LAST_BUILD', tools: [checkStyle()]
+           }
+       }
+       stage("code package"){
+           steps{
+               sh "mvn package"
+           }           
+       }
+    }
+}    
+       
+       

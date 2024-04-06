@@ -1,1 +1,2 @@
-sh "mvn compile"    
+def call(mvn_compile){
+sh "${mvn compile}"    
